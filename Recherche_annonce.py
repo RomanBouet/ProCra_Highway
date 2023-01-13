@@ -51,7 +51,7 @@ search_key = ['géophysique',
               'géologie',
     ]
 
-print("test_1")
+print("test2")
 
 def Recherche_annonce(rss_url, search_key):
     # Parse le flux RSS à l'aide de feedparser
