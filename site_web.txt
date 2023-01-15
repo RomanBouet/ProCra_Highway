@@ -1,0 +1,6 @@
+https://bouyguestelecom-recrute.talent-soft.com/handlers/offerRss.ashx?LCID=1036&Rss_Contract=1009,1
+https://brgm-recrute.talent-soft.com/handlers/offerRss.ashx?LCID=1036&Rss_Contract=559,1
+https://opus-career.talent-soft.com/handlers/offerRss.ashx?LCID=1036,0
+https://recrute-totalenergies.talent-soft.com/handlers/offerRss.ashx?LCID=1036,0
+https://www.emploi.cea.fr/handlers/offerRss.ashx?LCID=1036,1
+
