@@ -6,14 +6,15 @@ Created on Tue Jan 10 21:33:13 2023
 """
 
 
-
+import subprocess
+import os
 import difflib
 import feedparser
 import pickle
 from datetime import datetime
 import pandas as pd
 import configparser
-
+from config_appli_excel import make_excel_file
 class Annonce(object):
     
     
@@ -43,15 +44,25 @@ class Catalogue(object):
         return self
 
 def Compare_file(main_file, temp_file):
+    
     new_offers = pd.DataFrame()
+    main_file = pd.merge(main_file, temp_file, how='outer', indicator=False)
+    new_offers = pd.merge(main_file, temp_file, how='outer', indicator=True).query("_merge == 'right_only'")
+    new_offers.drop('_merge', axis=1)
+    """
     for offer in temp_file:
+        print(type(offer))
+        print(offer)
         print(offer.title)
         if offer.title not in main_file.title:
             print('nouvelle_offre')
-            main_file.append(offer)
-            new_offers.append(offer)
-
-    
+            main_file = pd.merge(main_file, offer, how='outer')
+            new_offers = pd.merge(new_offers, offer, how='outer')
+            #pd.concat([main_file,offer])
+            #pd.concat([new_offers,offer])
+            #main_file.append(offer)
+            #new_offers.append(offer)
+    """
     return main_file, new_offers
 
 def Recherche_annonce(rss_url, contrat_rss, search_key, contrats, precision):
@@ -139,6 +150,19 @@ daily_offers = pd.read_csv('Data/Main_file.csv',delimiter='|',header=0)
 
 main_file,new_offers = Compare_file(report_offers,daily_offers)
 
+main_file.to_csv('Data/Data_jobs.csv', index=False, sep='|')
 
-print('main_file : ',main_file)
-print('new_offers : ',new_offers)
+
+
+#########################################################
+#                      open Excel                       #
+#########################################################
+
+# Excel set up
+name_file = make_excel_file(main_file)
+
+# Chemin absolu du fichier Excel
+excel_file_path = os.path.abspath(name_file)
+
+# Ouvrir le fichier Excel avec l'application par défaut
+subprocess.Popen([excel_file_path], shell=True)
